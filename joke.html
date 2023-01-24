@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Joke</title>
+    <style>
+        body {
+            background: rgb(120, 240, 180);
+        }
+
+        #jokecontainer {
+            background: rgb(243, 190, 122);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 500px;
+            border-radius: 10px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3), 0, 0, 20px rgba(0, 0, 0, 0.3);
+            font-family: sans-serif;
+        }
+
+        #jokeText {
+            width: 70%;
+            text-align: center;
+            margin: auto;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            top: 57%;
+
+        }
+
+        .btn {
+            width: 200px;
+            height: calc(1.33*35px);
+            position: absolute;
+            top: 90%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.4);
+            background: rgb(255, 217, 0);
+            border: 1px solid black;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .emoji {
+            font-size: 7rem;
+            position: absolute;
+            left: 40%;
+            top: 5%;
+        }
+
+        .btn:hover {
+            transform: translate(-50%, -50%) scale(1.47);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="jokecontainer">
+        <span class="emoji">🤣</span>
+        <h2 id="jokeText"></h2>
+
+        <button type="button" class="btn btn-primary" id="btnbtn">GenerateJoke</button>
+    </div>
+
+
+
+
+</body>
+
+<script>
+    document.getElementById('btnbtn').addEventListener('click', () => {
+        console.log('getting users from API')
+        document.getElementById('btnbtn').disabled = true
+        fetch('https://official-joke-api.appspot.com/random_joke')
+            .then((result) => {
+
+                return result.json()
+            })
+            .then((result) => {
+
+                console.log('result', result)
+                document.getElementById('jokeText').innerHTML = (`${result.setup} ${result.punchline}`)
+            })
+            .finally(() => {
+
+                document.getElementById('btnbtn').disabled = false
+            })
+            .catch((error) => {
+                console.log('error: ', error)
+            })
+    })
+
+</script>
+
+</html>
